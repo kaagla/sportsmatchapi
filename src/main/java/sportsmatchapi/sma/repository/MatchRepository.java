@@ -17,6 +17,9 @@ public interface MatchRepository extends JpaRepository<MatchView, String> {
     @Query("SELECT m FROM MatchView m WHERE m.start_date = :date")
     List<MatchView> findByDate(@Param("date") Date date);
 
+    @Query("SELECT m FROM MatchView m WHERE m.start_date BETWEEN :from AND :to")
+    List<MatchView> findByDates(@Param("from") Date from, @Param("to") Date to);
+
     @Query("SELECT m FROM MatchView m WHERE m.start_date BETWEEN :from AND :to AND (" +
             "((:leagueids) IS NULL OR m.league_id IN (:leagueids)) OR " +
             "((:teamids) IS NULL OR m.hometeam_id IN (:teamids)) OR " +

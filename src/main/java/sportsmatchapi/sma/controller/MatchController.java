@@ -25,9 +25,9 @@ public class MatchController {
         return matchRepository.findById(id);
     }
 
-    @GetMapping("dates/{fromString}/{toString}")
-    public List<MatchView> matchesByDates(@PathVariable(required = true) String fromString,
-                                          @PathVariable(required = true) String toString,
+    @GetMapping("dates/{dateFrom}/{dateTo}")
+    public List<MatchView> matchesByDates(@PathVariable(required = true) String dateFrom,
+                                          @PathVariable(required = true) String dateTo,
                                           @RequestParam(required = false) List<String> leagueids,
                                           @RequestParam(required = false) List<String> teamids,
                                           @RequestParam(required = false) List<String> sports,
@@ -39,10 +39,15 @@ public class MatchController {
         Date to = new Date();
 
         try {
-            from = new SimpleDateFormat("yyyy-MM-dd").parse(fromString);
-            to = new SimpleDateFormat("yyyy-MM-dd").parse(toString);
+            from = new SimpleDateFormat("yyyy-MM-dd").parse(dateFrom);
+            to = new SimpleDateFormat("yyyy-MM-dd").parse(dateTo);
 
         } catch (java.text.ParseException e) {
+        }
+
+        if (leagueids == null && teamids == null && sports == null && grandareas == null
+                && municipalities == null && postoffices == null) {
+            return matchRepository.findByDates(from, to);
         }
 
         if (leagueids == null) {
