@@ -12,10 +12,7 @@ import java.util.List;
 public interface MatchRepository extends JpaRepository<MatchView, String> {
 
     @Query("SELECT m FROM MatchView m WHERE m.id in (:ids)")
-    List<MatchView> findMatchViewByIds(@Param("ids") List<String> ids);
-
-    @Query("SELECT m FROM MatchView m WHERE m.start_date = :date")
-    List<MatchView> findByDate(@Param("date") Date date);
+    List<MatchView> findByIds(@Param("ids") List<String> ids);
 
     @Query("SELECT m FROM MatchView m WHERE m.start_date BETWEEN :from AND :to")
     List<MatchView> findByDates(@Param("from") Date from, @Param("to") Date to);

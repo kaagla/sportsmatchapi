@@ -1,7 +1,9 @@
 package sportsmatchapi.sma.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import sportsmatchapi.sma.model.Location;
 import sportsmatchapi.sma.repository.LocationRepository;
 import sportsmatchapi.sma.repository.MatchRepository;
@@ -31,11 +33,25 @@ public class LocationController {
 
     @GetMapping("{id}")
     public Optional<Location> location(@PathVariable(required = true) String id) {
-        return locationRepository.findById(id);
+
+        Optional<Location> location = locationRepository.findById(id);
+
+        if (location.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Location id " + id + " not found.");
+        }
+
+        return location;
     }
 
     @GetMapping("{id}/matches")
     public List<MatchView> matchesByLocationId(@PathVariable(required = true) String id) {
+
+        Optional<Location> location = locationRepository.findById(id);
+
+        if (location.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Location id " + id + " not found.");
+        }
+
         return matchRepository.findByLocationId(id);
     }
 

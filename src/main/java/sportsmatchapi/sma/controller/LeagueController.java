@@ -1,10 +1,12 @@
 package sportsmatchapi.sma.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 import sportsmatchapi.sma.model.League;
 import sportsmatchapi.sma.view.MatchView;
 import sportsmatchapi.sma.view.TeamView;
@@ -36,6 +38,13 @@ public class LeagueController {
 
     @GetMapping("{id}")
     public Optional<League> leagueById(@PathVariable(required = true) String id) {
+
+        Optional<League> league = leagueRepository.findById(id);
+
+        if (league.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "League id " + id + " not found.");
+        }
+
         return leagueRepository.findById(id);
     }
 
@@ -46,11 +55,25 @@ public class LeagueController {
 
     @GetMapping("{id}/teams")
     public List<TeamView> teamsByLeagueId(@PathVariable(required = true) String id) {
+
+        Optional<League> league = leagueRepository.findById(id);
+
+        if (league.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "League id " + id + " not found.");
+        }
+
         return teamRepository.findByLeagueId(id);
     }
 
     @GetMapping("{id}/matches")
     public List<MatchView> matchesByLeagueId(@PathVariable(required = true) String id) {
+
+        Optional<League> league = leagueRepository.findById(id);
+
+        if (league.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "League id " + id + " not found.");
+        }
+
         return matchRepository.findByLeagueId(id);
     }
 }

@@ -1,7 +1,10 @@
 package sportsmatchapi.sma.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+import sportsmatchapi.sma.model.League;
 import sportsmatchapi.sma.view.MatchView;
 import sportsmatchapi.sma.repository.MatchRepository;
 
@@ -16,12 +19,24 @@ public class MatchController {
     MatchRepository matchRepository;
 
     @GetMapping("")
-    public List<MatchView> matches() {
+    public List<MatchView> matches(@RequestParam(required = false) List<String> ids) {
+
+        if (ids != null) {
+            return matchRepository.findByIds(ids);
+        }
+
         return matchRepository.findAll();
     }
 
     @GetMapping("{id}")
     public Optional<MatchView> matchById(@PathVariable(required = true) String id) {
+
+        Optional<MatchView> match = matchRepository.findById(id);
+
+        if (match.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Match id " + id + " not found.");
+        }
+
         return matchRepository.findById(id);
     }
 
