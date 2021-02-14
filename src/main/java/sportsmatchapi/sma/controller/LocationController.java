@@ -5,8 +5,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import sportsmatchapi.sma.model.Location;
+import sportsmatchapi.sma.model.Venue;
 import sportsmatchapi.sma.repository.LocationRepository;
 import sportsmatchapi.sma.repository.MatchRepository;
+import sportsmatchapi.sma.repository.VenueRepository;
 import sportsmatchapi.sma.view.MatchView;
 
 import java.util.Collections;
@@ -22,6 +24,9 @@ public class LocationController {
 
     @Autowired
     MatchRepository matchRepository;
+
+    @Autowired
+    VenueRepository venueRepository;
 
     @GetMapping("")
     public List<Location> locations(@RequestParam(required = false) List<String> ids) {
@@ -41,6 +46,18 @@ public class LocationController {
         }
 
         return location;
+    }
+
+    @GetMapping("{id}/venues")
+    public List<Venue> venuesByLocationId(@PathVariable(required = true) String id) {
+
+        Optional<Location> location = locationRepository.findById(id);
+
+        if (location.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Location id " + id + " not found.");
+        }
+
+        return venueRepository.findByLocationId(id);
     }
 
     @GetMapping("{id}/matches")

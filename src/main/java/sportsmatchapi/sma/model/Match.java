@@ -19,12 +19,11 @@ public class Match extends AbstractPersistable<String> {
     private Date start_date;
     private Date end_date;
     private String time;
-    private String venue;
     private String score;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="location_id")
-    private Location location;
+    @JoinColumn(name="venue_id")
+    private Venue venue;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="league_id")

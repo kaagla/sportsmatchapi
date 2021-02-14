@@ -20,7 +20,6 @@ public class Location extends AbstractPersistable<String> {
     private Float lat;
     private Float lon;
     private String postalcode;
-    private String sport;
     private String municipality;
     private String grandarea;
 

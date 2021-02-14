@@ -19,6 +19,7 @@ public class MatchView extends AbstractPersistable<String> {
     private String date;
     private Date start_date;
     private String time;
+    private String venue_id;
     private String venue;
     private String location_id;
     private String sport;
@@ -26,8 +27,10 @@ public class MatchView extends AbstractPersistable<String> {
     private String league;
     private String hometeam_id;
     private String hometeam;
+    private String homeclub_id;
     private String awayteam_id;
     private String awayteam;
+    private String awayclub_id;
     private String score;
 
     private String grandarea;

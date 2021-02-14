@@ -43,4 +43,10 @@ public interface MatchRepository extends JpaRepository<MatchView, String> {
 
     @Query("SELECT m FROM MatchView m WHERE m.location_id = :id")
     List<MatchView> findByLocationId(@Param("id") String id);
+
+    @Query("SELECT m FROM MatchView m WHERE m.homeclub_id = :id OR m.awayclub_id = :id")
+    List<MatchView> findByClubId(String id);
+
+    @Query("SELECT m FROM MatchView m WHERE m.venue_id = :id")
+    List<MatchView> findByVenueId(String id);
 }

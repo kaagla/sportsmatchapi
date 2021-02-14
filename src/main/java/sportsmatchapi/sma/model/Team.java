@@ -23,4 +23,8 @@ public class Team extends AbstractPersistable<String> {
     @JoinColumn(name="league_id")
     private League league;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="club_id")
+    private Club club;
+
 }

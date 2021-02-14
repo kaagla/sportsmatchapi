@@ -15,4 +15,6 @@ public interface TeamRepository extends JpaRepository<TeamView, String> {
     @Query("SELECT t FROM TeamView t WHERE t.league_id = :id")
     List<TeamView> findByLeagueId(@Param("id") String id);
 
+    @Query("SELECT t FROM TeamView t WHERE t.club_id = :id")
+    List<TeamView> findByClubId(String id);
 }
