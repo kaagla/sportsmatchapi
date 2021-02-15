@@ -8,8 +8,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import sportsmatchapi.sma.model.League;
-import sportsmatchapi.sma.repository.LeagueRepository;
 import sportsmatchapi.sma.repository.MatchRepository;
 import sportsmatchapi.sma.repository.TeamRepository;
 import sportsmatchapi.sma.view.TeamView;

@@ -10,6 +10,7 @@ import sportsmatchapi.sma.repository.LocationRepository;
 import sportsmatchapi.sma.repository.MatchRepository;
 import sportsmatchapi.sma.repository.VenueRepository;
 import sportsmatchapi.sma.view.MatchView;
+import sportsmatchapi.sma.view.VenueView;
 
 import java.util.Collections;
 import java.util.List;
@@ -49,7 +50,7 @@ public class LocationController {
     }
 
     @GetMapping("{id}/venues")
-    public List<Venue> venuesByLocationId(@PathVariable(required = true) String id) {
+    public List<VenueView> venuesByLocationId(@PathVariable(required = true) String id) {
 
         Optional<Location> location = locationRepository.findById(id);
 

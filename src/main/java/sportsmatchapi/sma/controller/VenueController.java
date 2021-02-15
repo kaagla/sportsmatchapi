@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
-import sportsmatchapi.sma.model.Venue;
 import sportsmatchapi.sma.repository.VenueRepository;
 import sportsmatchapi.sma.view.MatchView;
 import sportsmatchapi.sma.repository.MatchRepository;
+import sportsmatchapi.sma.view.VenueView;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,14 +27,14 @@ public class VenueController {
     MatchRepository matchRepository;
 
     @GetMapping("")
-    public List<Venue> venues() {
+    public List<VenueView> venues() {
         return venueRepository.findAll();
     }
 
     @GetMapping("{id}")
-    public Optional<Venue> venueById(@PathVariable(required = true) String id) {
+    public Optional<VenueView> venueById(@PathVariable(required = true) String id) {
 
-        Optional<Venue> venue = venueRepository.findById(id);
+        Optional<VenueView> venue = venueRepository.findById(id);
 
         if (venue.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Venue id " + id + " not found.");
@@ -44,7 +44,7 @@ public class VenueController {
     }
 
     @GetMapping("sport/{sport}")
-    public List<Venue> clubsBySport(@PathVariable(required = true) String sport) {
+    public List<VenueView> venuesBySport(@PathVariable(required = true) String sport) {
         return venueRepository.findBySport(sport);
     }
 
@@ -52,7 +52,7 @@ public class VenueController {
     @GetMapping("{id}/matches")
     public List<MatchView> matchesByVenueId(@PathVariable(required = true) String id) {
 
-        Optional<Venue> venue = venueRepository.findById(id);
+        Optional<VenueView> venue = venueRepository.findById(id);
 
         if (venue.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Venue id " + id + " not found.");
