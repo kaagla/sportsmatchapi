@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+import sportsmatchapi.sma.model.Location;
+import sportsmatchapi.sma.repository.LocationRepository;
 import sportsmatchapi.sma.view.MatchView;
 import sportsmatchapi.sma.view.TeamView;
 import sportsmatchapi.sma.repository.MatchRepository;
@@ -24,6 +26,9 @@ public class TeamController {
 
     @Autowired
     MatchRepository matchRepository;
+
+    @Autowired
+    LocationRepository locationRepository;
 
     @GetMapping("")
     public List<TeamView> teams() {
@@ -57,5 +62,13 @@ public class TeamController {
         }
 
         return matchRepository.findByTeamId(id);
+    }
+
+    @GetMapping("{id}/locations")
+    public List<Location> locationsByTeamId(@PathVariable(required = true) String id) {
+
+        List<String> locationIds = matchRepository.findLocationIdsByTeamId(id);
+
+        return locationRepository.findByIds(locationIds);
     }
 }

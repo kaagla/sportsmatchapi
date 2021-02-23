@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import sportsmatchapi.sma.model.League;
+import sportsmatchapi.sma.model.Location;
+import sportsmatchapi.sma.repository.LocationRepository;
 import sportsmatchapi.sma.view.MatchView;
 import sportsmatchapi.sma.view.TeamView;
 import sportsmatchapi.sma.repository.LeagueRepository;
@@ -30,6 +32,9 @@ public class LeagueController {
 
     @Autowired
     TeamRepository teamRepository;
+
+    @Autowired
+    LocationRepository locationRepository;
 
     @GetMapping("")
     public List<League> leagues() {
@@ -75,5 +80,13 @@ public class LeagueController {
         }
 
         return matchRepository.findByLeagueId(id);
+    }
+
+    @GetMapping("{id}/locations")
+    public List<Location> locationsByLeagueId(@PathVariable(required = true) String id) {
+
+        List<String> locationIds = matchRepository.findLocationIdsByLeagueId(id);
+
+        return locationRepository.findByIds(locationIds);
     }
 }

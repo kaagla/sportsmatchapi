@@ -49,4 +49,13 @@ public interface MatchRepository extends JpaRepository<MatchView, String> {
 
     @Query("SELECT m FROM MatchView m WHERE m.venue_id = :id")
     List<MatchView> findByVenueId(String id);
+
+    @Query("SELECT DISTINCT location_id FROM MatchView m WHERE m.homeclub_id = :id OR m.awayclub_id = :id")
+    List<String> findLocationIdsByClubId(String id);
+
+    @Query("SELECT DISTINCT location_id FROM MatchView m WHERE m.hometeam_id = :id OR m.awayteam_id = :id")
+    List<String> findLocationIdsByTeamId(String id);
+
+    @Query("SELECT DISTINCT location_id FROM MatchView m WHERE m.league_id = :id")
+    List<String> findLocationIdsByLeagueId(String id);
 }

@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import sportsmatchapi.sma.model.League;
 import sportsmatchapi.sma.repository.MatchRepository;
 import sportsmatchapi.sma.repository.TeamRepository;
 import sportsmatchapi.sma.view.TeamView;
@@ -17,6 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.hamcrest.Matchers.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest
@@ -111,6 +113,23 @@ public class TeamControllerTests {
         this.mockMvc.perform(get("/api/teams/"+team_id+"/matches"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(expected_amount_of_matches)));
+    }
+
+    @Test
+    public void get_locations_by_team_id() throws Exception {
+        String team_id = "t-1";
+        Optional<TeamView> team = teamRepository.findById(team_id);
+        assertThat(team).isNotEmpty();
+
+        List<String> locationIds = matchRepository.findLocationIdsByTeamId(team_id);
+
+        int expected_amount_of_locations = locationIds.size();
+        assertThat(expected_amount_of_locations).isGreaterThan(0);
+
+        this.mockMvc.perform(get("/api/teams/"+team_id+"/locations"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[*]", hasSize(expected_amount_of_locations)))
+                .andExpect(jsonPath("$[0].id", in(locationIds)));
     }
 
 }

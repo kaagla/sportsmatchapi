@@ -18,6 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.hamcrest.Matchers.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest
@@ -134,6 +135,23 @@ public class LeagueControllerTests {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(expected_amount_of_matches)))
                 .andExpect(jsonPath("$[0].league_id", is(league_id)));
+    }
+
+    @Test
+    public void get_locations_by_league_id() throws Exception {
+        String league_id = "l-1";
+        Optional<League> league = leagueRepository.findById(league_id);
+        assertThat(league).isNotEmpty();
+
+        List<String> locationIds = matchRepository.findLocationIdsByLeagueId(league_id);
+
+        int expected_amount_of_locations = locationIds.size();
+        assertThat(expected_amount_of_locations).isGreaterThan(0);
+
+        this.mockMvc.perform(get("/api/leagues/"+league_id+"/locations"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[*]", hasSize(expected_amount_of_locations)))
+                .andExpect(jsonPath("$[0].id", in(locationIds)));
     }
 
 }
