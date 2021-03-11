@@ -9,9 +9,6 @@ import java.util.List;
 
 public interface VenueRepository extends JpaRepository<VenueView, String> {
 
-    @Query("SELECT v FROM VenueView v WHERE v.sport LIKE :sport")
-    List<VenueView> findBySport(String sport);
-
     @Query("SELECT v FROM VenueView v WHERE v.location_id = :id")
     List<VenueView> findByLocationId(String id);
 }

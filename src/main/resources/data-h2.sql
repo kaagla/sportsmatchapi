@@ -20,9 +20,9 @@ VALUES ('loc-2','address2','02120','Espoo','Espoo','Helsinki-Uusimaa',61.21,23.5
 INSERT INTO locations (id,address,postalcode,postoffice,municipality,grandarea,lat, lon)
 VALUES ('loc-3','address3','95200','Simo','Simo','Pohjois- ja Itä-Suomi',62.01,24.03);
 
-INSERT INTO venues (id,name,sport,location_id) VALUES ('v-1','Venue1','Jalkapallo','loc-1');
-INSERT INTO venues (id,name,sport,location_id) VALUES ('v-2','Venue2','Jalkapallo','loc-2');
-INSERT INTO venues (id,name,sport,location_id) VALUES ('v-3','Venue3','Koripallo','loc-3');
+INSERT INTO venues (id,name,location_id) VALUES ('v-1','Venue1','loc-1');
+INSERT INTO venues (id,name,location_id) VALUES ('v-2','Venue2','loc-2');
+INSERT INTO venues (id,name,location_id) VALUES ('v-3','Venue3','loc-3');
 
 INSERT INTO matches (id,date,start_date,end_date,time,venue_id,league_id,hometeam_id,awayteam_id,score)
 VALUES ('m-1','1.3.2021','2021-03-01','2021-03-01','18:00','v-1','l-1','t-1','t-2','-');

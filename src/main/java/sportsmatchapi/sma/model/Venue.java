@@ -15,7 +15,6 @@ public class Venue extends AbstractPersistable<String> {
 
     private String id;
     private String name;
-    private String sport;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="location_id")

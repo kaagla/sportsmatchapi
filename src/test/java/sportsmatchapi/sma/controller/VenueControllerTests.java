@@ -84,21 +84,6 @@ public class VenueControllerTests {
     }
 
     @Test
-    public void get_venues_by_sport() throws Exception {
-
-        String sport = "Jalkapallo";
-
-        int expected_amount_of_venues = venueRepository.findBySport(sport).size();
-        assertThat(expected_amount_of_venues).isGreaterThan(0);
-
-        this.mockMvc.perform(get("/api/venues/sport/" + sport))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[*]", hasSize(expected_amount_of_venues)))
-                .andExpect(jsonPath("$[0].sport", is(sport)));
-
-    }
-
-    @Test
     public void get_matches_by_venue_id() throws Exception {
 
         String venue_id = "v-1";

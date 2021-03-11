@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS locations(id varchar primary key,address varchar,
     postalcode varchar,postoffice varchar, municipality varchar,grandarea varchar,
     lat float, lon float);
 
-CREATE TABLE IF NOT EXISTS venues(name varchar, sport varchar, id varchar primary key,
+CREATE TABLE IF NOT EXISTS venues(name varchar, id varchar primary key,
     location_id varchar references locations(id));
 
 CREATE TABLE IF NOT EXISTS leagues(name varchar, sport varchar, id varchar primary key);
@@ -30,7 +30,7 @@ LEFT JOIN clubs as c ON t.club_id = c.id
 LEFT JOIN leagues as l ON t.league_id = l.id;
 
 CREATE OR REPLACE VIEW venue_view AS
-SELECT v.id, v.name, v.sport, v.location_id, loc.municipality
+SELECT v.id, v.name, v.location_id, loc.postoffice, loc.municipality
 FROM venues as v
 LEFT JOIN locations as loc ON v.location_id = loc.id;
 

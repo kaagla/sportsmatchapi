@@ -43,12 +43,6 @@ public class VenueController {
         return venue;
     }
 
-    @GetMapping("sport/{sport}")
-    public List<VenueView> venuesBySport(@PathVariable(required = true) String sport) {
-        return venueRepository.findBySport(sport);
-    }
-
-
     @GetMapping("{id}/matches")
     public List<MatchView> matchesByVenueId(@PathVariable(required = true) String id) {
 

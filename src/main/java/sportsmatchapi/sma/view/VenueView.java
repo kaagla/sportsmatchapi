@@ -16,8 +16,8 @@ public class VenueView extends AbstractPersistable<String> {
 
     private String id;
     private String name;
-    private String sport;
     private String location_id;
+    private String postoffice;
     private String municipality;
 
 }
